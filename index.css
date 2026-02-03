@@ -148,9 +148,12 @@ body {
 
 /* Moniepoint Receipt Styles */
 .moniepoint-receipt {
-    width: 375px;
-    height: auto;
-    background: linear-gradient(135deg, #1d5ff0 0%, #1548d1 100%);
+    /* width: 375px;
+    height: auto; */
+    background-image: url("receipt-bg.png");
+    background-size: cover;
+    background-position: center;
+    /* background: linear-gradient(135deg, #1d5ff0 0%, #1548d1 100%); */
     border-radius: 0;
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
