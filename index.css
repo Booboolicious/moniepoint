@@ -149,46 +149,32 @@ body {
 /* Moniepoint Receipt Styles */
 .moniepoint-receipt {
     width: 375px;
-        /* Restore common mobile width */
-        min-height: 750px;
-        /* Provide enough height for the full length */
+    height: 812px;
     background-image: url("receipt-bg.png");
-    background-size: 100% 100%;
-        background-repeat: no-repeat;
-    /* background: linear-gradient(135deg, #1d5ff0 0%, #1548d1 100%); */
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
     border-radius: 0;
-    /* overflow: hidden; */
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
     position: relative;
 }
 
-/* .receipt-bg-stripe {
-    position: absolute;
-    top: -80px;
-    right: -120px;
-    width: 500px;
-    height: 600px;
-    background: linear-gradient(135deg, #f7b733 0%, #fc9a1a 100%);
-    transform: rotate(35deg);
-    opacity: 1;
-}
 
-*/
 
-.receipt-header {
+/* .receipt-header {
     padding: 35px 24px 15px;
     position: relative;
     z-index: 2;
-}
+} */
 
-.moniepoint-logo {
+/* .moniepoint-logo {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
-}
+} */
 
-.logo-icon {
+/* .logo-icon {
     width: 42px;
     height: 42px;
     background: white;
@@ -199,7 +185,7 @@ body {
     font-size: 26px;
     font-weight: 900;
     color: #1d5ff0;
-}
+} */
 
 .logo-text {
     color: white;
