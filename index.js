@@ -53,10 +53,12 @@ const CONFIG = {
         }
     },
     canvasOptions: {
-        scale: 3,
+        scale: 4,             // Increased for extra sharpness
         backgroundColor: null,
         logging: false,
-        useCORS: true
+        useCORS: true,
+        allowTaint: true,     // Helps with cross-origin images
+        dpi: 300,             // Professional print resolution
     }
 };
 
