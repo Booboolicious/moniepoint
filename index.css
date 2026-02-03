@@ -302,13 +302,7 @@ body {
     letter-spacing: 0.3px;
 }
 
-.receipt-footer {
-    height: 40px;
-    background: #f8f9fb;
-    position: relative;
-    overflow: visible;
-    margin-top: 0;
-}
+
 
 .wave-container {
     position: absolute;
@@ -322,15 +316,7 @@ body {
     background: #1d5ff0;
 }
 
-.circle {
-    width: 21px;
-    height: 21px;
-    background: #f8f9fb;
-    border-radius: 50%;
-    margin-right: 0;
-    flex-shrink: 0;
-    margin-top: 4px;
-}
+
 
 .btn-download {
     width: 100%;
