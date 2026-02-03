@@ -158,6 +158,8 @@ body {
     border-radius: 0;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
     padding-top: 212px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .logo-text {
@@ -180,11 +182,10 @@ body {
 
 .receipt-card {
     background: transparent;
-    border: 2px solid red;
     margin: 0px 16px;
     border-radius: 1px;
-    padding: 24px 14px;
-  
+    padding: 20px 14px;
+
 }
 
 .details-section {
