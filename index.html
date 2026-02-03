@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moniepoint Receipt Generator</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>📱 Receipt Generator</h2>
+            <p>Fill in the transaction details to generate your Moniepoint receipt</p>
+
+            <form id="receiptForm">
+                <div class="form-group">
+                    <label for="amount">Amount (₦)</label>
+                    <input type="text" id="amount" placeholder="1,000.00" value="1,000.00" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="biller">Biller Name</label>
+                    <input type="text" id="biller" placeholder="Port Harcourt Electricity Distribution Postpaid"
+                        value="Port Harcourt Electricity Distribution Postpaid" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="beneficiaryId">Beneficiary ID</label>
+                    <input type="text" id="beneficiaryId" placeholder="841305815001" value="841305815001" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="40 OBOT STR. N/A" value="40 OBOT STR. N/A" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="transactionDate">Transaction Date</label>
+                    <input type="text" id="transactionDate" placeholder="Monday, February 2nd, 2026"
+                        value="Monday, February 2nd, 2026" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="transactionRef">Transaction Reference</label>
+                    <input type="text" id="transactionRef" placeholder="BPT|2MPTbe0z1|2018372898801610752"
+                        value="BPT|2MPTbe0z1|2018372898801610752" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessName">Business Name</label>
+                    <input type="text" id="businessName" placeholder="EZEKIEL ABAESSIEN AUGUSTINE"
+                        value="EZEKIEL ABAESSIEN AUGUSTINE" required>
+                </div>
+
+                <button type="button" class="btn-generate" onclick="updateReceipt()" link="receipt.html"> Update Receipt</button>
+            </form>
+        </div>
+
+
+    </div>
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="receipt-preview">
+            <div class="navigation-header">
+                <a href="index.html" class="btn-back">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Back to Edit
+                </a>
+            </div>
+            <div class="moniepoint-receipt" id="receipt">
+                <div class="receipt-bg-stripe"></div>
+
+                <div class="receipt-header">
+                    <div class="moniepoint-logo">
+                        <div class="logo-icon">M</div>
+                        <div class="logo-text">
+                            <h1>Moniepoint</h1>
+                            <p>MICROFINANCE BANK</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="receipt-card">
+                    <div class="debit-badge">DEBIT</div>
+
+                    <div class="amount-section">
+                        <div class="amount" id="displayAmount">₦1,000.00</div>
+                        <div class="m-icon">M</div>
+                    </div>
+
+                    <div class="details-section">
+                        <div class="detail-row">
+                            <div class="detail-label">Transaction Type</div>
+                            <div class="transaction-type-badge">Bill Payments</div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-label">Biller</div>
+                            <div class="detail-value" id="displayBiller">Port Harcourt Electricity Distribution Postpaid
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-label">Beneficiary ID</div>
+                            <div class="detail-value" id="displayBeneficiaryId">841305815001</div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-label">Address</div>
+                            <div class="detail-value" id="displayAddress">40 OBOT STR. N/A</div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-label">Transaction Date</div>
+                            <div class="detail-value" id="displayTransactionDate">Monday, February 2nd, 2026</div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-label">Transaction Reference</div>
+                            <div class="detail-value" id="displayTransactionRef">BPT|2MPTbe0z1|2018372898801610752</div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-label">Business Name</div>
+                            <div class="detail-value" id="displayBusinessName">EZEKIEL ABAESSIEN AUGUSTINE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="receipt-footer">
+                    <div class="wave-container">
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-download" onclick="downloadReceipt()">📥 Download as Image</button>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="index.js"></script>
+</body>
+</html>
