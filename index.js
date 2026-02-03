@@ -3,22 +3,22 @@ const formFields = [
     {
         id: 'beneficiaryId',
         label: 'Beneficiary ID',
-        placeholder: '841305815001',
-        defaultValue: '841305815001',
+        placeholder: 'Enter Beneficiary ID',
+        defaultValue: '',
         displayId: 'displayBeneficiaryId'
     },
     {
         id: 'address',
         label: 'Address',
-        placeholder: '40 OBOT STR. N/A',
-        defaultValue: '40 OBOT STR. N/A',
+        placeholder: 'Enter Address',
+        defaultValue: '',
         displayId: 'displayAddress'
     },
     {
         id: 'businessName',
         label: 'Business Name',
-        placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE',
-        defaultValue: 'EZEKIEL ABAESSIEN AUGUSTINE',
+        placeholder: 'Enter Business Name',
+        defaultValue: '',
         displayId: 'displayBusinessName'
     }
 ];
