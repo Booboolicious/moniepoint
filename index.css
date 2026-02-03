@@ -157,7 +157,9 @@ body {
     background-repeat: no-repeat;
     border-radius: 0;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-    position: relative;
+    /* position: relative; */
+    border: 2px solid red;
+    padding-top: 212px;
 }
 
 .logo-text {
@@ -179,10 +181,11 @@ body {
 }
 
 .receipt-card {
-    background: #f8f9fb;
+    /* background: #f8f9fb; */
+    background: transparent;
     border: 2px solid red;
-    margin: 0px 22px;
-    border-radius: 16px;
+    margin: 0px 16px;
+    border-radius: 1px;
     padding: 24px 20px;
     /* position: relative; */
     /* z-index: 2; */
