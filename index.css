@@ -48,10 +48,10 @@ body {
 .container {
     max-width: 1200px;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    display: flex;
+        justify-content: center;
     align-items: start;
+    gap: 40px;
 }
 
 @media (max-width: 968px) {
@@ -71,6 +71,8 @@ body {
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+        max-width: 600px;
 }
 
 .form-section h2 {
