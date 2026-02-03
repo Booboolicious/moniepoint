@@ -60,6 +60,12 @@ body {
     }
 }
 
+/* Center when only showing receipt */
+.container:has(.receipt-preview):not(:has(.form-section)) {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+}
 .form-section {
     background: white;
     padding: 40px;

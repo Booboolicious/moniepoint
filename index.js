@@ -1,13 +1,56 @@
 // --- Pure Logic & Config ---
 const CONFIG = {
     selectors: {
-        amount: { input: 'amount', display: 'displayAmount', prefix: '₦' },
-        biller: { input: 'biller', display: 'displayBiller' },
-        beneficiary: { input: 'beneficiaryId', display: 'displayBeneficiaryId' },
-        address: { input: 'address', display: 'displayAddress' },
-        date: { input: 'transactionDate', display: 'displayTransactionDate' },
-        ref: { input: 'transactionRef', display: 'displayTransactionRef' },
-        business: { input: 'businessName', display: 'displayBusinessName' }
+        amount: {
+            input: 'amount',
+            label: 'Amount (₦)',
+            placeholder: '1,000.00',
+            defaultValue: '1,000.00',
+            display: 'displayAmount',
+            prefix: '₦'
+        },
+        biller: {
+            input: 'biller',
+            label: 'Biller Name',
+            placeholder: 'Port Harcourt Electricity Distribution Postpaid',
+            defaultValue: 'Port Harcourt Electricity Distribution Postpaid',
+            display: 'displayBiller'
+        },
+        beneficiary: {
+            input: 'beneficiaryId',
+            label: 'Beneficiary ID',
+            placeholder: '841305815001',
+            defaultValue: '841305815001',
+            display: 'displayBeneficiaryId'
+        },
+        address: {
+            input: 'address',
+            label: 'Address',
+            placeholder: '40 OBOT STR. N/A',
+            defaultValue: '40 OBOT STR. N/A',
+            display: 'displayAddress'
+        },
+        date: {
+            input: 'transactionDate',
+            label: 'Transaction Date',
+            placeholder: 'Monday, February 2nd, 2026',
+            defaultValue: 'Monday, February 2nd, 2026',
+            display: 'displayTransactionDate'
+        },
+        ref: {
+            input: 'transactionRef',
+            label: 'Transaction Reference',
+            placeholder: 'BPT|2MPTbe0z1|2018372898801610752',
+            defaultValue: 'BPT|2MPTbe0z1|2018372898801610752',
+            display: 'displayTransactionRef'
+        },
+        business: {
+            input: 'businessName',
+            label: 'Business Name',
+            placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE',
+            defaultValue: 'EZEKIEL ABAESSIEN AUGUSTINE',
+            display: 'displayBusinessName'
+        }
     },
     canvasOptions: {
         scale: 3,
@@ -34,6 +77,9 @@ const getFormData = () => {
         return acc;
     }, {});
 };
+
+const updateReceiptField = ({ input, display, prefix = '' }) =>
+    setText(display, `${prefix}${getValue(input)}`);
 
 const updateReceipt = (shouldRedirect = false) => {
     const data = getFormData();
@@ -92,17 +138,42 @@ const downloadReceipt = () => {
         });
 };
 
+// --- UI Rendering ---
+const createFormField = (id, field) => `
+    <div class="form-group">
+        <label for="${field.input}">${field.label}</label>
+        <input type="text" id="${field.input}" placeholder="${field.placeholder}" value="${field.defaultValue}" required>
+    </div>
+`;
+
+const renderForm = () => {
+    const form = getElement('receiptForm');
+    if (!form) return;
+
+    const fieldsHtml = Object.entries(CONFIG.selectors)
+        .map(([id, field]) => createFormField(id, field))
+        .join('');
+
+    form.innerHTML = `
+        ${fieldsHtml}
+        <button type="button" class="btn-generate">Update Receipt</button>
+    `;
+};
+
 // --- Initialization (Side Effects) ---
 const init = () => {
-    // Load existing data if any
+    // 1. Render UI from Config
+    renderForm();
+
+    // 2. Load existing data if any
     loadReceiptData();
 
-    // Listen for inputs if on index page
+    // 3. Listen for inputs if on index page
     document.querySelectorAll('input').forEach(input => 
         input.addEventListener('input', () => updateReceipt(false))
     );
     
-    // If we are on index.html, the button should trigger direct navigation
+    // 4. Handle Navigation
     const generateBtn = document.querySelector('.btn-generate');
     if (generateBtn) {
         generateBtn.onclick = () => updateReceipt(true);
