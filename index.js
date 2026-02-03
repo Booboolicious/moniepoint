@@ -81,6 +81,7 @@ function renderForm() {
             <div class="form-group">
                 <label for="${field.id}">${field.label}</label>
                 <input type="text" id="${field.id}" placeholder="${field.placeholder}" value="${field.defaultValue}" required>
+                <div class="error-hint">Please fill out this field to continue</div>
             </div>
         `;
     }
@@ -94,6 +95,8 @@ function renderForm() {
     const inputs = formContainer.querySelectorAll('input');
     for (let i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('input', function () {
+            // Remove error state when user starts typing
+            this.parentElement.classList.remove('error');
             updateReceipt(false); // Update preview without redirecting
         });
     }
@@ -110,6 +113,7 @@ function renderForm() {
 // 3. This function saves data and updates the live preview
 function updateReceipt(shouldRedirect) {
     const receiptData = {};
+    let isValid = true;
 
     // Grab values from all inputs and update the live text
     for (let i = 0; i < formFields.length; i++) {
@@ -118,6 +122,12 @@ function updateReceipt(shouldRedirect) {
 
         if (inputElement) {
             let value = inputElement.value;
+
+            // --- FEATURE: Validation ---
+            if (shouldRedirect && value.trim() === '') {
+                inputElement.parentElement.classList.add('error');
+                isValid = false;
+            }
 
             // --- FEATURE: Force Uppercase for Business Name ---
             if (field.id === 'businessName') {
@@ -133,6 +143,11 @@ function updateReceipt(shouldRedirect) {
                 displayElement.textContent = prefix + value;
             }
         }
+    }
+
+    // Stop if the user tried to submit (redirect) with empty fields
+    if (shouldRedirect && !isValid) {
+        return;
     }
 
     // Save all the data to the browser session so the next page can see it

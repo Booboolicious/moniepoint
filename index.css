@@ -142,6 +142,40 @@ body {
     transform: translateY(0);
 }
 
+/* Error States and Hints */
+.form-group.error input {
+    border-color: #ff4d4f;
+    background-color: #fff1f0;
+    animation: shake 0.4s ease-in-out;
+}
+
+.error-hint {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin-top: 6px;
+    display: none;
+    font-weight: 500;
+}
+
+.form-group.error .error-hint {
+    display: block;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
 .receipt-preview {
     position: sticky;
     top: 40px;
