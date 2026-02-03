@@ -1,20 +1,5 @@
 // 1. Setup our data - a simple list of fields we need
 const formFields = [
-    // {
-    //     id: 'amount',
-    //     label: 'Amount (₦)',
-    //     placeholder: '1,000.00',
-    //     defaultValue: '1,000.00',
-    //     displayId: 'displayAmount',
-    //     prefix: '₦'
-    // },
-    // {
-    //     id: 'biller',
-    //     label: 'Biller Name',
-    //     placeholder: 'Port Harcourt Electricity Distribution Postpaid',
-    //     defaultValue: 'Port Harcourt Electricity Distribution Postpaid',
-    //     displayId: 'displayBiller'
-    // },
     {
         id: 'beneficiaryId',
         label: 'Beneficiary ID',
@@ -36,11 +21,6 @@ const formFields = [
         defaultValue: 'Monday, February 2nd, 2026',
         displayId: 'displayTransactionDate'
     },
-    // {
-    //     id: 'transactionRef',
-    //     label: 'Transaction Reference',
-    //     placeholder: 'BPT|2MPTbe0z1|2018372898801610752', defaultValue: 'BPT|2MPTbe0z1|2018372898801610752', displayId: 'displayTransactionRef'
-    // },
     {
         id: 'businessName',
         label: 'Business Name',
@@ -49,6 +29,24 @@ const formFields = [
         displayId: 'displayBusinessName'
     }
 ];
+
+// Helper to generate a random 15-digit number
+function generateRandom15Digits() {
+    let result = '';
+    for (let i = 0; i < 15; i++) {
+        result += Math.floor(Math.random() * 10);
+    }
+    return result;
+}
+
+// Function to update the static transaction reference
+function updateStaticReference() {
+    const displayElement = document.getElementById('displayTransactionRef');
+    if (displayElement) {
+        const randomNumber = generateRandom15Digits();
+        displayElement.textContent = `BPT|2MPTbe0z1|2018${randomNumber}`;
+    }
+}
 
 function renderForm() {
     const formContainer = document.getElementById('receiptForm');
@@ -182,3 +180,4 @@ function downloadReceipt() {
 // 6. Start everything up when the script loads
 renderForm();
 loadSavedData();
+updateStaticReference();
