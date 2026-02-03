@@ -73,6 +73,8 @@ function renderForm() {
     if (!formContainer) return; 
 
     let html = '';
+
+    // Loop through each field and create the HTML for it
     for (let i = 0; i < formFields.length; i++) {
         const field = formFields[i];
         html += `
@@ -133,8 +135,10 @@ function updateReceipt(shouldRedirect) {
         }
     }
 
+    // Save all the data to the browser session so the next page can see it
     sessionStorage.setItem('receiptData', JSON.stringify(receiptData));
 
+    // If we are on the page with the receipt, run a quick animation
     const receipt = document.getElementById('receipt');
     if (receipt) {
         receipt.style.transform = 'scale(0.98)';
@@ -144,24 +148,29 @@ function updateReceipt(shouldRedirect) {
         }, 100);
     }
 
+    // Go to the receipt page if the user clicked "Update Receipt"
     if (shouldRedirect === true) {
         window.location.href = 'receipt.html';
     }
 }
 
+// 4. This function loads saved data when the page opens
 function loadSavedData() {
     const rawData = sessionStorage.getItem('receiptData');
     if (!rawData) return;
 
     const data = JSON.parse(rawData);
+
     for (let i = 0; i < formFields.length; i++) {
         const field = formFields[i];
         const savedValue = data[field.id];
 
         if (savedValue) {
+            // Put the value back into the input box if it exists
             const input = document.getElementById(field.id);
             if (input) input.value = savedValue;
 
+            // Put the value into the receipt display text if it exists
             const display = document.getElementById(field.displayId);
             if (display) {
                 const prefix = field.prefix || '';
@@ -171,10 +180,12 @@ function loadSavedData() {
     }
 }
 
+// 5. This function handles the image download
 function downloadReceipt() {
     const receipt = document.getElementById('receipt');
     if (!receipt) return;
 
+    // Settings for the screenshot library
     const options = {
         scale: 4,
         backgroundColor: null,
