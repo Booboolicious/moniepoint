@@ -49,7 +49,7 @@ body {
     max-width: 1200px;
     width: 100%;
     display: flex;
-        justify-content: center;
+    justify-content: center;
     align-items: start;
     gap: 40px;
 }
@@ -66,13 +66,14 @@ body {
     justify-content: center;
     max-width: 600px;
 }
+
 .form-section {
     background: white;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     width: 100%;
-        max-width: 600px;
+    max-width: 600px;
 }
 
 .form-section h2 {
@@ -159,34 +160,6 @@ body {
     position: relative;
 }
 
-
-
-/* .receipt-header {
-    padding: 35px 24px 15px;
-    position: relative;
-    z-index: 2;
-} */
-
-/* .moniepoint-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-} */
-
-/* .logo-icon {
-    width: 42px;
-    height: 42px;
-    background: white;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    font-weight: 900;
-    color: #1d5ff0;
-} */
-
 .logo-text {
     color: white;
 }
@@ -214,7 +187,7 @@ body {
     z-index: 2;
 }
 
-.debit-badge {
+/* .debit-badge {
     display: inline-block;
     background: #dbeafe;
     color: #1d5ff0;
@@ -224,23 +197,23 @@ body {
     font-weight: 700;
     margin-bottom: 16px;
     letter-spacing: 0.3px;
-}
+} */
 
-.amount-section {
+/* .amount-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-}
+} */
 
-.amount {
+/* .amount {
     font-size: 42px;
     font-weight: 700;
     color: #000000;
     letter-spacing: -0.5px;
-}
+} */
 
-.m-icon {
+/* .m-icon {
     width: 52px;
     height: 52px;
     background: #1d5ff0;
@@ -251,7 +224,7 @@ body {
     font-size: 30px;
     font-weight: 900;
     color: white;
-}
+} */
 
 .details-section {
     background: white;
