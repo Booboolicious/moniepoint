@@ -1,185 +1,144 @@
-// --- Pure Logic & Config ---
-const CONFIG = {
-    selectors: {
-        amount: {
-            input: 'amount',
-            label: 'Amount (₦)',
-            placeholder: '1,000.00',
-            defaultValue: '1,000.00',
-            display: 'displayAmount',
-            prefix: '₦'
-        },
-        biller: {
-            input: 'biller',
-            label: 'Biller Name',
-            placeholder: 'Port Harcourt Electricity Distribution Postpaid',
-            defaultValue: 'Port Harcourt Electricity Distribution Postpaid',
-            display: 'displayBiller'
-        },
-        beneficiary: {
-            input: 'beneficiaryId',
-            label: 'Beneficiary ID',
-            placeholder: '841305815001',
-            defaultValue: '841305815001',
-            display: 'displayBeneficiaryId'
-        },
-        address: {
-            input: 'address',
-            label: 'Address',
-            placeholder: '40 OBOT STR. N/A',
-            defaultValue: '40 OBOT STR. N/A',
-            display: 'displayAddress'
-        },
-        date: {
-            input: 'transactionDate',
-            label: 'Transaction Date',
-            placeholder: 'Monday, February 2nd, 2026',
-            defaultValue: 'Monday, February 2nd, 2026',
-            display: 'displayTransactionDate'
-        },
-        ref: {
-            input: 'transactionRef',
-            label: 'Transaction Reference',
-            placeholder: 'BPT|2MPTbe0z1|2018372898801610752',
-            defaultValue: 'BPT|2MPTbe0z1|2018372898801610752',
-            display: 'displayTransactionRef'
-        },
-        business: {
-            input: 'businessName',
-            label: 'Business Name',
-            placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE',
-            defaultValue: 'EZEKIEL ABAESSIEN AUGUSTINE',
-            display: 'displayBusinessName'
-        }
-    },
-    canvasOptions: {
-        scale: 4,             // Increased for extra sharpness
-        backgroundColor: null,
-        logging: false,
-        useCORS: true,
-        allowTaint: true,     // Helps with cross-origin images
-        dpi: 300,             // Professional print resolution
+// 1. Setup our data - a simple list of fields we need
+const formFields = [
+    { id: 'amount', label: 'Amount (₦)', placeholder: '1,000.00', defaultValue: '1,000.00', displayId: 'displayAmount', prefix: '₦' },
+    { id: 'biller', label: 'Biller Name', placeholder: 'Port Harcourt Electricity Distribution Postpaid', defaultValue: 'Port Harcourt Electricity Distribution Postpaid', displayId: 'displayBiller' },
+    { id: 'beneficiaryId', label: 'Beneficiary ID', placeholder: '841305815001', defaultValue: '841305815001', displayId: 'displayBeneficiaryId' },
+    { id: 'address', label: 'Address', placeholder: '40 OBOT STR. N/A', defaultValue: '40 OBOT STR. N/A', displayId: 'displayAddress' },
+    { id: 'transactionDate', label: 'Transaction Date', placeholder: 'Monday, February 2nd, 2026', defaultValue: 'Monday, February 2nd, 2026', displayId: 'displayTransactionDate' },
+    { id: 'transactionRef', label: 'Transaction Reference', placeholder: 'BPT|2MPTbe0z1|2018372898801610752', defaultValue: 'BPT|2MPTbe0z1|2018372898801610752', displayId: 'displayTransactionRef' },
+    { id: 'businessName', label: 'Business Name', placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE', defaultValue: 'EZEKIEL ABAESSIEN AUGUSTINE', displayId: 'displayBusinessName' }
+];
+
+// 2. This function builds the form on the page
+function renderForm() {
+    const formContainer = document.getElementById('receiptForm');
+    if (!formContainer) return; // Exit if the form isn't on this page
+
+    let html = '';
+
+    // Loop through each field and create the HTML for it
+    for (let i = 0; i < formFields.length; i++) {
+        const field = formFields[i];
+        html += `
+            <div class="form-group">
+                <label for="${field.id}">${field.label}</label>
+                <input type="text" id="${field.id}" placeholder="${field.placeholder}" value="${field.defaultValue}" required>
+            </div>
+        `;
     }
-};
 
-// --- Impure / Side Effect Helpers ---
-const getElement = (id) => document.getElementById(id);
-const getValue = (id) => getElement(id)?.value || '';
-const setText = (id, text) => {
-    const el = getElement(id);
-    if (el) el.textContent = text;
-};
+    // Add the button at the end
+    html += '<button type="button" class="btn-generate" id="generateBtn">Update Receipt</button>';
 
-const applyStyle = (el, styles) => Object.assign(el.style, styles);
+    formContainer.innerHTML = html;
 
-// --- Functional Transformations ---
-const getFormData = () => {
-    return Object.entries(CONFIG.selectors).reduce((acc, [key, config]) => {
-        acc[key] = getValue(config.input);
-        return acc;
-    }, {});
-};
+    // After rendering, attach event listeners to the new inputs
+    const inputs = formContainer.querySelectorAll('input');
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('input', function () {
+            updateReceipt(false); // Update preview without redirecting
+        });
+    }
 
-const updateReceiptField = ({ input, display, prefix = '' }) =>
-    setText(display, `${prefix}${getValue(input)}`);
+    // Attach click listener to the generate button
+    const generateBtn = document.getElementById('generateBtn');
+    if (generateBtn) {
+        generateBtn.onclick = function () {
+            updateReceipt(true); // Update and redirect
+        };
+    }
+}
 
-const updateReceipt = (shouldRedirect = false) => {
-    const data = getFormData();
-    
-    // Save to session storage for persistence across pages
-    sessionStorage.setItem('receiptData', JSON.stringify(data));
+// 3. This function saves data and updates the live preview
+function updateReceipt(shouldRedirect) {
+    const receiptData = {};
 
-    // Update fields if they exist on the current page
-    Object.values(CONFIG.selectors).forEach(updateReceiptField);
+    // Grab values from all inputs and update the live text
+    for (let i = 0; i < formFields.length; i++) {
+        const field = formFields[i];
+        const inputElement = document.getElementById(field.id);
 
-    // Isolated animation side effect if receipt exists
-    const receipt = getElement('receipt');
+        if (inputElement) {
+            const value = inputElement.value;
+            receiptData[field.id] = value; // Store for saving
+
+            // Update the display text on the receipt
+            const displayElement = document.getElementById(field.displayId);
+            if (displayElement) {
+                const prefix = field.prefix || '';
+                displayElement.textContent = prefix + value;
+            }
+        }
+    }
+
+    // Save all the data to the browser session so the next page can see it
+    sessionStorage.setItem('receiptData', JSON.stringify(receiptData));
+
+    // If we are on the page with the receipt, run a quick animation
+    const receipt = document.getElementById('receipt');
     if (receipt) {
-        applyStyle(receipt, { transform: 'scale(0.98)' });
-        setTimeout(() => {
-            applyStyle(receipt, { 
-                transition: 'transform 0.3s ease', 
-                transform: 'scale(1)' 
-            });
+        receipt.style.transform = 'scale(0.98)';
+        setTimeout(function () {
+            receipt.style.transition = 'transform 0.3s ease';
+            receipt.style.transform = 'scale(1)';
         }, 100);
     }
 
-    if (shouldRedirect) {
+    // Go to the receipt page if the user clicked "Update Receipt"
+    if (shouldRedirect === true) {
         window.location.href = 'receipt.html';
     }
-};
+}
 
-const loadReceiptData = () => {
-    const savedData = sessionStorage.getItem('receiptData');
-    if (!savedData) return;
+// 4. This function loads saved data when the page opens
+function loadSavedData() {
+    const rawData = sessionStorage.getItem('receiptData');
+    if (!rawData) return;
 
-    const data = JSON.parse(savedData);
-    
-    Object.entries(CONFIG.selectors).forEach(([key, config]) => {
-        const value = data[key];
-        // Update input if on index page
-        const input = getElement(config.input);
-        if (input) input.value = value;
-        
-        // Update display if on receipt page
-        const prefix = config.prefix || '';
-        setText(config.display, `${prefix}${value}`);
-    });
-};
+    const data = JSON.parse(rawData);
 
-const downloadReceipt = () => {
-    const receipt = getElement('receipt');
-    if (!receipt) return;
-    
-    html2canvas(receipt, CONFIG.canvasOptions)
-        .then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'moniepoint-receipt.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        });
-};
+    for (let i = 0; i < formFields.length; i++) {
+        const field = formFields[i];
+        const savedValue = data[field.id];
 
-// --- UI Rendering ---
-const createFormField = (id, field) => `
-    <div class="form-group">
-        <label for="${field.input}">${field.label}</label>
-        <input type="text" id="${field.input}" placeholder="${field.placeholder}" value="${field.defaultValue}" required>
-    </div>
-`;
+        if (savedValue) {
+            // Put the value back into the input box if it exists
+            const input = document.getElementById(field.id);
+            if (input) input.value = savedValue;
 
-const renderForm = () => {
-    const form = getElement('receiptForm');
-    if (!form) return;
-
-    const fieldsHtml = Object.entries(CONFIG.selectors)
-        .map(([id, field]) => createFormField(id, field))
-        .join('');
-
-    form.innerHTML = `
-        ${fieldsHtml}
-        <button type="button" class="btn-generate">Update Receipt</button>
-    `;
-};
-
-// --- Initialization (Side Effects) ---
-const init = () => {
-    // 1. Render UI from Config
-    renderForm();
-
-    // 2. Load existing data if any
-    loadReceiptData();
-
-    // 3. Listen for inputs if on index page
-    document.querySelectorAll('input').forEach(input => 
-        input.addEventListener('input', () => updateReceipt(false))
-    );
-    
-    // 4. Handle Navigation
-    const generateBtn = document.querySelector('.btn-generate');
-    if (generateBtn) {
-        generateBtn.onclick = () => updateReceipt(true);
+            // Put the value into the receipt display text if it exists
+            const display = document.getElementById(field.displayId);
+            if (display) {
+                const prefix = field.prefix || '';
+                display.textContent = prefix + savedValue;
+            }
+        }
     }
-};
+}
 
-init();
+// 5. This function handles the image download
+function downloadReceipt() {
+    const receipt = document.getElementById('receipt');
+    if (!receipt) return;
+
+    // Settings for the screenshot library
+    const options = {
+        scale: 4,
+        backgroundColor: null,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        dpi: 300
+    };
+
+    html2canvas(receipt, options).then(function (canvas) {
+        const link = document.createElement('a');
+        link.download = 'moniepoint-receipt.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// 6. Start everything up when the script loads
+renderForm();
+loadSavedData();
