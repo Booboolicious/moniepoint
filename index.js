@@ -1,12 +1,53 @@
 // 1. Setup our data - a simple list of fields we need
 const formFields = [
-    { id: 'amount', label: 'Amount (₦)', placeholder: '1,000.00', defaultValue: '1,000.00', displayId: 'displayAmount', prefix: '₦' },
-    { id: 'biller', label: 'Biller Name', placeholder: 'Port Harcourt Electricity Distribution Postpaid', defaultValue: 'Port Harcourt Electricity Distribution Postpaid', displayId: 'displayBiller' },
-    { id: 'beneficiaryId', label: 'Beneficiary ID', placeholder: '841305815001', defaultValue: '841305815001', displayId: 'displayBeneficiaryId' },
-    { id: 'address', label: 'Address', placeholder: '40 OBOT STR. N/A', defaultValue: '40 OBOT STR. N/A', displayId: 'displayAddress' },
-    { id: 'transactionDate', label: 'Transaction Date', placeholder: 'Monday, February 2nd, 2026', defaultValue: 'Monday, February 2nd, 2026', displayId: 'displayTransactionDate' },
-    { id: 'transactionRef', label: 'Transaction Reference', placeholder: 'BPT|2MPTbe0z1|2018372898801610752', defaultValue: 'BPT|2MPTbe0z1|2018372898801610752', displayId: 'displayTransactionRef' },
-    { id: 'businessName', label: 'Business Name', placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE', defaultValue: 'EZEKIEL ABAESSIEN AUGUSTINE', displayId: 'displayBusinessName' }
+    {
+        id: 'amount',
+        label: 'Amount (₦)',
+        placeholder: '1,000.00',
+        defaultValue: '1,000.00',
+        displayId: 'displayAmount',
+        prefix: '₦'
+    },
+    {
+        id: 'biller',
+        label: 'Biller Name',
+        placeholder: 'Port Harcourt Electricity Distribution Postpaid',
+        defaultValue: 'Port Harcourt Electricity Distribution Postpaid',
+        displayId: 'displayBiller'
+    },
+    {
+        id: 'beneficiaryId',
+        label: 'Beneficiary ID',
+        placeholder: '841305815001',
+        defaultValue: '841305815001',
+        displayId: 'displayBeneficiaryId'
+    },
+    {
+        id: 'address',
+        label: 'Address',
+        placeholder: '40 OBOT STR. N/A',
+        defaultValue: '40 OBOT STR. N/A',
+        displayId: 'displayAddress'
+    },
+    {
+        id: 'transactionDate',
+        label: 'Transaction Date',
+        placeholder: 'Monday, February 2nd, 2026',
+        defaultValue: 'Monday, February 2nd, 2026',
+        displayId: 'displayTransactionDate'
+    },
+    {
+        id: 'transactionRef',
+        label: 'Transaction Reference',
+        placeholder: 'BPT|2MPTbe0z1|2018372898801610752', defaultValue: 'BPT|2MPTbe0z1|2018372898801610752', displayId: 'displayTransactionRef'
+    },
+    {
+        id: 'businessName',
+        label: 'Business Name',
+        placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE',
+        defaultValue: 'EZEKIEL ABAESSIEN AUGUSTINE',
+        displayId: 'displayBusinessName'
+    }
 ];
 
 // 2. This function builds the form on the page
