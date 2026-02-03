@@ -15,13 +15,6 @@ const formFields = [
         displayId: 'displayAddress'
     },
     {
-        id: 'transactionDate',
-        label: 'Transaction Date',
-        placeholder: 'Monday, February 2nd, 2026',
-        defaultValue: 'Monday, February 2nd, 2026',
-        displayId: 'displayTransactionDate'
-    },
-    {
         id: 'businessName',
         label: 'Business Name',
         placeholder: 'EZEKIEL ABAESSIEN AUGUSTINE',
@@ -29,6 +22,26 @@ const formFields = [
         displayId: 'displayBusinessName'
     }
 ];
+
+// Helper to generate reaching "Wednesday, February 4th, 2026" format
+function getFormattedDate() {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const now = new Date();
+    const dayName = days[now.getDay()];
+    const monthName = months[now.getMonth()];
+    const date = now.getDate();
+    const year = now.getFullYear();
+
+    // Add suffix (st, nd, rd, th)
+    let suffix = 'th';
+    if (date === 1 || date === 21 || date === 31) suffix = 'st';
+    else if (date === 2 || date === 22) suffix = 'nd';
+    else if (date === 3 || date === 23) suffix = 'rd';
+
+    return `${dayName}, ${monthName} ${date}${suffix}, ${year}`;
+}
 
 // Helper to generate a random 15-digit number
 function generateRandom15Digits() {
@@ -39,22 +52,27 @@ function generateRandom15Digits() {
     return result;
 }
 
-// Function to update the static transaction reference
-function updateStaticReference() {
-    const displayElement = document.getElementById('displayTransactionRef');
-    if (displayElement) {
+// Function to update automatic fields (Reference and Date)
+function updateAutoFields() {
+    // 1. Update Random Transaction Reference
+    const refElement = document.getElementById('displayTransactionRef');
+    if (refElement) {
         const randomNumber = generateRandom15Digits();
-        displayElement.textContent = `BPT|2MPTbe0z1|2018${randomNumber}`;
+        refElement.textContent = `BPT|2MPTbe0z1|2018${randomNumber}`;
+    }
+
+    // 2. Update Current Date
+    const dateElement = document.getElementById('displayTransactionDate');
+    if (dateElement) {
+        dateElement.textContent = getFormattedDate();
     }
 }
 
 function renderForm() {
     const formContainer = document.getElementById('receiptForm');
-    if (!formContainer) return; // Exit if the form isn't on this page
+    if (!formContainer) return; 
 
     let html = '';
-
-    // Loop through each field and create the HTML for it
     for (let i = 0; i < formFields.length; i++) {
         const field = formFields[i];
         html += `
@@ -97,10 +115,16 @@ function updateReceipt(shouldRedirect) {
         const inputElement = document.getElementById(field.id);
 
         if (inputElement) {
-            const value = inputElement.value;
-            receiptData[field.id] = value; // Store for saving
+            let value = inputElement.value;
 
-            // Update the display text on the receipt
+            // --- FEATURE: Force Uppercase for Business Name ---
+            if (field.id === 'businessName') {
+                value = value.toUpperCase();
+                inputElement.value = value; // Update the input box itself too
+            }
+
+            receiptData[field.id] = value;
+
             const displayElement = document.getElementById(field.displayId);
             if (displayElement) {
                 const prefix = field.prefix || '';
@@ -109,10 +133,8 @@ function updateReceipt(shouldRedirect) {
         }
     }
 
-    // Save all the data to the browser session so the next page can see it
     sessionStorage.setItem('receiptData', JSON.stringify(receiptData));
 
-    // If we are on the page with the receipt, run a quick animation
     const receipt = document.getElementById('receipt');
     if (receipt) {
         receipt.style.transform = 'scale(0.98)';
@@ -122,29 +144,24 @@ function updateReceipt(shouldRedirect) {
         }, 100);
     }
 
-    // Go to the receipt page if the user clicked "Update Receipt"
     if (shouldRedirect === true) {
         window.location.href = 'receipt.html';
     }
 }
 
-// 4. This function loads saved data when the page opens
 function loadSavedData() {
     const rawData = sessionStorage.getItem('receiptData');
     if (!rawData) return;
 
     const data = JSON.parse(rawData);
-
     for (let i = 0; i < formFields.length; i++) {
         const field = formFields[i];
         const savedValue = data[field.id];
 
         if (savedValue) {
-            // Put the value back into the input box if it exists
             const input = document.getElementById(field.id);
             if (input) input.value = savedValue;
 
-            // Put the value into the receipt display text if it exists
             const display = document.getElementById(field.displayId);
             if (display) {
                 const prefix = field.prefix || '';
@@ -154,12 +171,10 @@ function loadSavedData() {
     }
 }
 
-// 5. This function handles the image download
 function downloadReceipt() {
     const receipt = document.getElementById('receipt');
     if (!receipt) return;
 
-    // Settings for the screenshot library
     const options = {
         scale: 4,
         backgroundColor: null,
@@ -177,7 +192,7 @@ function downloadReceipt() {
     });
 }
 
-// 6. Start everything up when the script loads
+// Start everything up
 renderForm();
 loadSavedData();
-updateStaticReference();
+updateAutoFields();
