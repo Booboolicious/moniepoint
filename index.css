@@ -180,11 +180,12 @@ body {
 
 .receipt-card {
     background: #f8f9fb;
-    margin: 0 16px 16px;
+    border: 2px solid red;
+    margin: 0px 22px;
     border-radius: 16px;
     padding: 24px 20px;
-    position: relative;
-    z-index: 2;
+    /* position: relative; */
+    /* z-index: 2; */
 }
 
 /* .debit-badge {
