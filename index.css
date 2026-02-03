@@ -157,8 +157,6 @@ body {
     background-repeat: no-repeat;
     border-radius: 0;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-    /* position: relative; */
-    border: 2px solid red;
     padding-top: 212px;
 }
 
@@ -185,7 +183,7 @@ body {
     border: 2px solid red;
     margin: 0px 16px;
     border-radius: 1px;
-    padding: 24px 16px;
+    padding: 24px 14px;
   
 }
 
@@ -218,6 +216,7 @@ body {
     font-weight: 400;
     word-wrap: break-word;
     line-height: 1.4;
+    padding: 6px 0px;
 }
 
 .transaction-type-badge {
